@@ -46,6 +46,35 @@ Medical imaging · remote sensing · natural images · **any segmentation task**
 
 ---
 
+## 🆚 vs nn-UNet
+
+| Feature | Auto-Segmentation | nn-UNet |
+|---------|------------------|---------|
+| **Purpose** | Autonomous research framework for experimenting with segmentation architectures and techniques | Production-level, self-configuring segmentation system |
+| **Automation** | AI agents autonomously modify code, train, and iterate on improvements | Automated preprocessing and configuration, but manual model training |
+| **Flexibility** | Highly flexible - agents can modify architecture, loss functions, augmentation, optimizers | Specialized for U-Net variants with fixed training pipeline |
+| **Research Focus** | Exploration of novel architectures, loss functions, training strategies | Optimized for proven, state-of-the-art medical image segmentation |
+| **Dataset Support** | Any segmentation dataset (PNG, NIfTI, NPY) with simple config | Primarily medical imaging with specific preprocessing requirements |
+| **Time Budget** | Fixed training time (5min default) for rapid experimentation | Full training until convergence (hours to days) |
+| **Evaluation** | Rapid iteration with immediate feedback on experiments | Comprehensive evaluation with cross-validation |
+| **Use Case** | Research prototyping, architecture search, education | Production medical image segmentation, competitions |
+| **Setup Complexity** | Simple - point config at dataset | Complex - requires specific folder structure and preprocessing |
+| **Reproducibility** | Git-tracked experiments with full history | Highly reproducible with fixed configurations |
+
+**Key Advantages of Auto-Segmentation:**
+- ✅ **Rapid experimentation** - 5-minute iterations vs. hours-long training
+- ✅ **Autonomous research** - AI agents explore the design space automatically
+- ✅ **Simple setup** - No complex preprocessing or configuration
+- ✅ **Educational** - Learn segmentation by experimenting with different approaches
+- ✅ **Flexible** - Easy to try new architectures, loss functions, etc.
+- ✅ **Format-agnostic** - Works with various image formats out of the box
+
+**When to use nn-UNet instead:**
+- 🏥 Production medical image segmentation
+- 🏆 Competitions requiring state-of-the-art results
+- 📊 Papers requiring benchmarked, established methods
+- 🔬 Tasks where nn-UNet is the established baseline
+
 ## 🚀 How it works
 
 The repo contains only four files that matter:
