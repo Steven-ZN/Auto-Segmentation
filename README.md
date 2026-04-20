@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔬 Auto-Segmentation
+# Auto-Segmentation
 
 ### *Let AI agents do your segmentation research while you sleep.*
 
@@ -17,14 +17,14 @@
 <table>
 <tr><td align="left">
 
-🧠 &nbsp;Tired of manually tuning architectures, loss functions, and hyperparameters for every new segmentation task?<br>
-🌙 &nbsp;Wish you could run 100 experiments overnight and wake up to a better model?<br>
-🔄 &nbsp;Want an AI that autonomously tries ideas, keeps what works, and discards what doesn't?
+Tired of manually tuning architectures, loss functions, and hyperparameters for every new segmentation task?<br>
+Wish you could run 100 experiments overnight and wake up to a better model?<br>
+Want an AI that autonomously tries ideas, keeps what works, and discards what doesn't?
 
 </td></tr>
 </table>
 
-### ✨ Auto-Segmentation does exactly that.
+### Auto-Segmentation does exactly that.
 
 <br>
 
@@ -38,7 +38,7 @@ Medical imaging · remote sensing · natural images · **any segmentation task**
 
 <br>
 
-[⚡ Quick Start](#-quick-start) · [🚀 How It Works](#-how-it-works) · [🔧 Agent Stages](#-what-the-agent-can-modify-in-trainpy) · [📊 Metrics](#-supported-metrics) · [📝 Examples](#-example-configs)
+[Quick Start](#-quick-start) · [How It Works](#-how-it-works) · [Agent Stages](#-what-the-agent-can-modify-in-trainpy) · [Metrics](#-supported-metrics) · [Examples](#-example-configs)
 
 [**中文**](docs/README_ZH.md) · [**English**](README.md)
 
@@ -81,7 +81,7 @@ The agent modifies `train.py` — everything is fair game: architecture, loss fu
 └──────────────────────────────────────────────────────┘
 ```
 
-## 📦 Quick start
+## Quick start
 
 ### 1. Install dependencies
 
@@ -160,7 +160,7 @@ Read program.md and let's kick off a new experiment! Let's do the setup first.
 
 The agent will create a branch, establish a baseline, and start iterating autonomously.
 
-## 📁 Supported data formats
+## Supported data formats
 
 | Format | Extensions | Notes |
 |--------|-----------|-------|
@@ -170,7 +170,7 @@ The agent will create a branch, establish a baseline, and start iterating autono
 
 Image-mask pairs are matched by filename stem. nnU-Net-style suffixes (`_0000`) are automatically stripped.
 
-## 📊 Supported metrics
+## Supported metrics
 
 | Metric | Config key | Direction | Notes |
 |--------|-----------|-----------|-------|
@@ -178,7 +178,7 @@ Image-mask pairs are matched by filename stem. nnU-Net-style suffixes (`_0000`) 
 | IoU / Jaccard | `iou` | Higher is better | Per-class mean (excl. background) |
 | Hausdorff 95% | `hd95` | Higher is better* | *Returned as negative internally |
 
-## 🔧 What the agent can modify in train.py
+## What the agent can modify in train.py
 
 The training script is organized into clearly labeled stages:
 
@@ -190,7 +190,7 @@ The training script is organized into clearly labeled stages:
 | STAGE 4 | Optimizer & scheduler | AdamW → SGD+momentum, cosine → poly decay |
 | STAGE 5 | Training loop | Add AMP, EMA, gradient accumulation |
 
-## 🎨 Design choices
+## Design choices
 
 - **Single file to modify.** The agent only touches `train.py`. Keeps scope manageable and diffs reviewable.
 - **Fixed time budget.** Training always runs for exactly N minutes. Experiments are directly comparable regardless of architecture or hyperparameter changes.
@@ -198,7 +198,7 @@ The training script is organized into clearly labeled stages:
 - **Format-agnostic data loading.** Supports natural images (PNG/JPG), medical images (NIfTI), and raw arrays (NPY) out of the box.
 - **Self-contained.** No external model registries. The baseline UNet is written from scratch in train.py.
 
-## 📝 Example configs
+## Example configs
 
 <details>
 <summary>Medical image segmentation (binary)</summary>
@@ -434,13 +434,13 @@ This is a **research prototype**, not a production-ready system. However, it's d
 ❌ Competitions requiring state-of-the-art results
 ❌ Tasks where reliability and reproducibility are critical
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
 Based on [karpathy/autoresearch](https://github.com/karpathy/autoresearch), which is also licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [karpathy/autoresearch](https://github.com/karpathy/autoresearch) — the original concept of AI-driven autonomous research
 - [nanochat](https://github.com/karpathy/nanochat) — the training framework that inspired the single-file approach

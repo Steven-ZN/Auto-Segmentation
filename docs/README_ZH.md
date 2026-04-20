@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔬 Auto-Segmentation
+# Auto-Segmentation
 
 ### *让 AI Agent 在你睡觉的时候做分割研究。*
 
@@ -17,14 +17,14 @@
 <table>
 <tr><td align="left">
 
-🧠 &nbsp;厌倦了为每个新的分割任务手动调架构、损失函数、超参数？<br>
-🌙 &nbsp;想让 AI 在你睡觉时跑 100 次实验，醒来就得到更好的模型？<br>
-🔄 &nbsp;想要一个能自主尝试想法、保留有效方案、丢弃无效方案的 AI？
+厌倦了为每个新的分割任务手动调架构、损失函数、超参数？<br>
+想让 AI 在你睡觉时跑 100 次实验，醒来就得到更好的模型？<br>
+想要一个能自主尝试想法、保留有效方案、丢弃无效方案的 AI？
 
 </td></tr>
 </table>
 
-### ✨ Auto-Segmentation 正是实现这一目标。
+### Auto-Segmentation 正是实现这一目标。
 
 <br>
 
@@ -38,7 +38,7 @@
 
 <br>
 
-[⚡ 快速开始](#-快速开始) · [🚀 工作原理](#-工作原理) · [🔧 Agent 可修改的阶段](#-agent-可修改-trainpy-的内容) · [📊 指标](#-支持的指标) · [📝 示例配置](#-示例配置)
+[快速开始](#-快速开始) · [工作原理](#-工作原理) · [可修改阶段](#-智能体可修改-trainpy-的内容) · [指标](#-支持的指标) · [示例配置](#-示例配置)
 
 [**中文**](README_ZH.md) · [**English**](../README.md)
 
@@ -81,7 +81,7 @@
 └──────────────────────────────────────────────────────┘
 ```
 
-## ⚡ 快速开始
+## 快速开始
 
 ### 1. 安装依赖
 
@@ -160,7 +160,7 @@ num_params:       7,832,134
 
 智能体将创建分支、建立基线，然后开始自主迭代实验。
 
-## 📁 支持的数据格式
+## 支持的数据格式
 
 | 格式 | 扩展名 | 说明 |
 |------|--------|------|
@@ -170,7 +170,7 @@ num_params:       7,832,134
 
 图片-标注对通过文件名匹配。nnU-Net 风格后缀（`_0000`）会自动去除。
 
-## 📊 支持的指标
+## 支持的指标
 
 | 指标 | 配置键 | 方向 | 说明 |
 |------|--------|------|------|
@@ -178,7 +178,7 @@ num_params:       7,832,134
 | IoU / Jaccard | `iou` | 越高越好 | 按类别平均（不含背景） |
 | Hausdorff 95% | `hd95` | 越高越好* | *内部返回负值 |
 
-## 🔧 智能体可修改 train.py 的内容
+## 智能体可修改 train.py 的内容
 
 训练脚本被划分为清晰标记的五个阶段：
 
@@ -190,7 +190,7 @@ num_params:       7,832,134
 | STAGE 4 | 优化器和调度器 | AdamW → SGD+momentum、cosine → poly decay |
 | STAGE 5 | 训练循环 | 添加 AMP、EMA、梯度累积 |
 
-## 📝 示例配置
+## 示例配置
 
 <details>
 <summary>医学影像分割（二分类）</summary>
@@ -426,13 +426,13 @@ device: "cuda:0"
 ❌ 需要最先进结果的竞赛项目
 ❌ 可靠性和可重现性至关重要的任务
 
-## 📄 许可证
+## 许可证
 
 MIT 许可证 - 详见 [LICENSE](../LICENSE) 文件。
 
 本项目基于 [karpathy/autoresearch](https://github.com/karpathy/autoresearch)，同样采用 MIT 许可证。
 
-## 🙏 致谢
+## 致谢
 
 - [karpathy/autoresearch](https://github.com/karpathy/autoresearch) — AI 驱动自主研究的原创概念
 - [nanochat](https://github.com/karpathy/nanochat) — 启发了单文件设计思想的训练框架
