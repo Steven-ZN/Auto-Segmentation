@@ -40,6 +40,8 @@ Medical imaging · remote sensing · natural images · **any segmentation task**
 
 [⚡ Quick Start](#-quick-start) · [🚀 How It Works](#-how-it-works) · [🔧 Agent Stages](#-what-the-agent-can-modify-in-trainpy) · [📊 Metrics](#-supported-metrics) · [📝 Examples](#-example-configs)
 
+[**中文**](docs/README_ZH.md) · [**English**](README.md)
+
 </div>
 
 ---
