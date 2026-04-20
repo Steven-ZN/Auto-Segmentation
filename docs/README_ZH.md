@@ -24,7 +24,7 @@
 </td></tr>
 </table>
 
-### 🔬 Auto-Segmentation 正是实现这一目标。
+### 🔬 Auto-Segmentation 正为实现这一目标而诞生的。
 
 <br>
 
