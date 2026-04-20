@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔬 Auto-Seg
+# 🔬 Auto-Segmentation
 
 ### *Let AI agents do your segmentation research while you sleep.*
 
@@ -24,7 +24,7 @@
 </td></tr>
 </table>
 
-### ✨ Auto-Seg does exactly that.
+### ✨ Auto-Segmentation does exactly that.
 
 <br>
 

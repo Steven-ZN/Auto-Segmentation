@@ -1,5 +1,5 @@
 """
-auto-seg: Single-file segmentation training script.
+Auto-Segmentation: Single-file segmentation training script.
 This is the ONLY file the AI agent modifies.
 
 It contains the full segmentation pipeline:

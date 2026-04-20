@@ -1,4 +1,4 @@
-# auto-seg: Agent Instructions for Segmentation Research
+# Auto-Segmentation: Agent Instructions for Segmentation Research
 
 This is an experiment to have an AI agent do autonomous segmentation research.
 
@@ -6,8 +6,8 @@ This is an experiment to have an AI agent do autonomous segmentation research.
 
 To set up a new experiment, work with the user to:
 
-1. **Agree on a run tag**: propose a tag based on today's date (e.g. `apr20`). The branch `auto-seg/<tag>` must not already exist — this is a fresh run.
-2. **Create the branch**: `git checkout -b auto-seg/<tag>` from current master.
+1. **Agree on a run tag**: propose a tag based on today's date (e.g. `apr20`). The branch `Auto-Segmentation/<tag>` must not already exist — this is a fresh run.
+2. **Create the branch**: `git checkout -b Auto-Segmentation/<tag>` from current master.
 3. **Read the in-scope files**: The repo is small. Read these files for full context:
    - `README.md` — repository context.
    - `config.yaml` — task configuration (dataset path, metric, time budget). Do not modify.
