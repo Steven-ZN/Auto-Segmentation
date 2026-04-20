@@ -1,45 +1,48 @@
-# auto-seg
+<div align="center">
 
-AI agents running autonomous segmentation research, automatically.
+# 🔬 Auto-Seg
 
-## ⚠️ Project Status
+### *Let AI agents do your segmentation research while you sleep.*
 
-**This is a basic research framework for general-purpose image segmentation tasks.** It is designed as a starting point for autonomous ML research, not a production-ready system.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org)
 
-## 🎯 Inspiration & License
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Agent-blueviolet)](https://claude.ai/code)
+[![Codex](https://img.shields.io/badge/Codex-Agent-black)](https://openai.com/codex)
+[![Cursor](https://img.shields.io/badge/Cursor-Agent-blue)](https://cursor.sh)
 
-This project is inspired by and adapted from [karpathy/autoresearch](https://github.com/karpathy/autoresearch), originally created for autonomous LLM research. We have generalized the concept to **any image segmentation task** while maintaining the core autonomous experimentation philosophy.
+<br>
 
-**Original License:** MIT License - see [LICENSE](LICENSE) file for details.
+<table>
+<tr><td align="left">
 
-## 🆚 vs nn-UNet
+🧠 &nbsp;Tired of manually tuning architectures, loss functions, and hyperparameters for every new segmentation task?<br>
+🌙 &nbsp;Wish you could run 100 experiments overnight and wake up to a better model?<br>
+🔄 &nbsp;Want an AI that autonomously tries ideas, keeps what works, and discards what doesn't?
 
-| Feature | auto-seg | nn-UNet |
-|---------|------------------|---------|
-| **Purpose** | Autonomous research framework for experimenting with segmentation architectures and techniques | Production-level, self-configuring segmentation system |
-| **Automation** | AI agents autonomously modify code, train, and iterate on improvements | Automated preprocessing and configuration, but manual model training |
-| **Flexibility** | Highly flexible - agents can modify architecture, loss functions, augmentation, optimizers | Specialized for U-Net variants with fixed training pipeline |
-| **Research Focus** | Exploration of novel architectures, loss functions, training strategies | Optimized for proven, state-of-the-art medical image segmentation |
-| **Dataset Support** | Any segmentation dataset (PNG, NIfTI, NPY) with simple config | Primarily medical imaging with specific preprocessing requirements |
-| **Time Budget** | Fixed training time (5min default) for rapid experimentation | Full training until convergence (hours to days) |
-| **Evaluation** | Rapid iteration with immediate feedback on experiments | Comprehensive evaluation with cross-validation |
-| **Use Case** | Research prototyping, architecture search, education | Production medical image segmentation, competitions |
-| **Setup Complexity** | Simple - point config at dataset | Complex - requires specific folder structure and preprocessing |
-| **Reproducibility** | Git-tracked experiments with full history | Highly reproducible with fixed configurations |
+</td></tr>
+</table>
 
-**Key Advantages of auto-seg:**
-- ✅ **Rapid experimentation** - 5-minute iterations vs. hours-long training
-- ✅ **Autonomous research** - AI agents explore the design space automatically
-- ✅ **Simple setup** - No complex preprocessing or configuration
-- ✅ **Educational** - Learn segmentation by experimenting with different approaches
-- ✅ **Flexible** - Easy to try new architectures, loss functions, etc.
-- ✅ **Format-agnostic** - Works with various image formats out of the box
+### ✨ Auto-Seg does exactly that.
 
-**When to use nn-UNet instead:**
-- 🏥 Production medical image segmentation
-- 🏆 Competitions requiring state-of-the-art results
-- 📊 Papers requiring benchmarked, established methods
-- 🔬 Tasks where nn-UNet is the established baseline
+<br>
+
+Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch) for LLM pretraining — **generalized for any image segmentation task**.
+
+Point it at your dataset · pick a metric · let the agent iterate overnight
+
+Medical imaging · remote sensing · natural images · **any segmentation task**
+
+**One config file + one AI agent = autonomous segmentation research**
+
+<br>
+
+[⚡ Quick Start](#-quick-start) · [🚀 How It Works](#-how-it-works) · [🔧 Agent Stages](#-what-the-agent-can-modify-in-trainpy) · [📊 Metrics](#-supported-metrics) · [📝 Examples](#-example-configs)
+
+</div>
+
+---
 
 ## 🚀 How it works
 
