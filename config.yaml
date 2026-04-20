@@ -1,0 +1,24 @@
+# autoresearch-seg configuration
+# Fill in your dataset details, then run: python train.py
+
+# === Data ===
+data:
+  root: "./synth_data"               # Dataset root directory
+  image_dir: "images"                # Image subdirectory (relative to root)
+  mask_dir: "masks"                  # Mask subdirectory (relative to root)
+  format: "auto"                     # auto | png | nii.gz | npy
+  num_classes: 2                     # Number of classes (including background)
+  image_size: 256                    # Resize to this square size
+  val_split: 0.2                     # Validation split ratio
+  seed: 42                           # Random seed for split
+
+# === Evaluation ===
+eval:
+  primary_metric: "dice"             # dice | iou | hd95 (higher is better)
+  eval_batch_size: 8                 # Batch size for evaluation
+
+# === Training budget ===
+time_budget: 60                      # Training time limit in seconds (1 min for testing)
+
+# === Hardware ===
+device: "cuda:0"                     # cuda:0, cuda:1, cpu, etc.
