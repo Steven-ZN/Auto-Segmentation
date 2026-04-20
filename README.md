@@ -254,51 +254,183 @@ device: "cuda:0"
 ```
 </details>
 
-## ⚠️ Limitations
+## ⚠️ Limitations & How to Extend
 
-This is a **research prototype**, not a production-ready system. Key limitations to be aware of:
+This is a **research prototype**, not a production-ready system. However, it's designed to be **easily extensible**. Here are the key limitations and how you can overcome them:
 
 ### Architecture & Training
-- **Basic UNet only** — The baseline is a standard UNet. No attention mechanisms, residual blocks, or modern architectural improvements
-- **Simple augmentation** — Only random flips. No elastic deformations, color jittering, CutMix, or advanced augmentation strategies
-- **Basic loss function** — Combined Dice + Cross-Entropy. No focal loss, Tversky loss, boundary-aware loss, or class weighting
-- **Limited metrics** — Only Dice, IoU, and HD95. No per-class breakdown, confusion matrices, or boundary-specific metrics
+**Limitation:** Basic UNet only — no attention mechanisms, residual blocks, or modern architectural improvements
+**🔧 How to fix:** Modify `STAGE 2` in `train.py`. Replace the `UNet` class with:
+```python
+# Add attention gates to skip connections
+# Replace with ResUNet blocks (add residual connections)
+# Implement FPN-style decoder
+# Try DeepLabV3+ with atrous spatial pyramid pooling
+```
+
+**Limitation:** Simple augmentation — only random flips. No elastic deformations, color jittering, CutMix
+**🔧 How to fix:** Modify `STAGE 1` in `train.py`. Add to `augment_batch()`:
+```python
+# Add elastic deformation using scipy.ndimage
+# Implement color jittering for RGB images
+# Add CutMix or Copy-Paste augmentation
+# Try random rotation, scaling, and translation
+```
+
+**Limitation:** Basic loss function — only Dice + Cross-Entropy. No focal loss, Tversky loss, boundary-aware loss
+**🔧 How to fix:** Modify `STAGE 3` in `train.py`. Replace `DiceBCELoss` with:
+```python
+# Add focal loss for class imbalance
+# Implement Tversky loss with tunable alpha/beta
+# Add boundary-weighted loss for edge refinement
+# Combine multiple losses with learned weights
+```
+
+**Limitation:** Limited metrics — only Dice, IoU, and HD95. No per-class breakdown or confusion matrices
+**🔧 How to fix:** Extend the evaluation section in `train.py`:
+```python
+# Add per-class Dice/IoU computation
+# Implement confusion matrix analysis
+# Add boundary-specific metrics (boundary Dice, Hausdorff surface)
+# Track precision/recall for each class
+```
 
 ### Training Infrastructure
-- **No model checkpointing** — Models are not saved. Each experiment starts from scratch
-- **Fixed time budget** — Training stops after N minutes regardless of convergence. May not reach optimal performance
-- **Single GPU only** — No multi-GPU or distributed training support
-- **Basic optimizer** — AdamW with cosine decay. No SGD with momentum, Adam, LAMB, or learning rate finder
-- **No early stopping** — Relies entirely on time budget rather than validation performance
-- **Minimal logging** — Only terminal output and TSV file. No TensorBoard, W&B, or detailed experiment tracking
+**Limitation:** No model checkpointing — models are not saved, each experiment starts from scratch
+**🔧 How to fix:** Add to `STAGE 5` in `train.py`:
+```python
+# Save best model: torch.save(model.state_dict(), "best_model.pth")
+# Implement periodic checkpointing during training
+# Add model loading for continued training or inference
+# Export to ONNX for deployment
+```
+
+**Limitation:** Fixed time budget — training stops after N minutes regardless of convergence
+**🔧 How to fix:** Modify the training loop in `STAGE 5`:
+```python
+# Add early stopping based on validation metric
+# Implement learning rate scheduling with restarts
+# Add validation during training (not just at end)
+# Use metric plateau detection
+```
+
+**Limitation:** Single GPU only — no multi-GPU or distributed training support
+**🔧 How to fix:** Wrap model with PyTorch distributed training:
+```python
+# Add: torch.nn.DataParallel(model) for simple multi-GPU
+# Use torch.distributed for serious distributed training
+# Implement gradient accumulation for larger effective batch size
+# Add mixed precision (AMP) training for memory efficiency
+```
+
+**Limitation:** Minimal logging — only terminal output and TSV file. No TensorBoard, W&B, or detailed tracking
+**🔧 How to fix:** Add logging in `STAGE 5`:
+```python
+# Integrate TensorBoard: from torch.utils.tensorboard import SummaryWriter
+# Add Weights & Biases logging: import wandb; wandb.init()
+# Save training curves and metric histories
+# Log sample predictions during training
+```
 
 ### Data Handling
-- **Simple preprocessing** — Basic resize and normalization. No intensity windowing, histogram equalization, or advanced preprocessing
-- **Basic data splitting** — Simple random split. No cross-validation, stratification, or domain-aware splitting
-- **Format support** — PNG/JPG, NIfTI, NPY only. No DICOM support (without conversion) or other medical formats
-- **2D only** — No native 3D training support. NIfTI volumes are sliced to 2D
+**Limitation:** Simple preprocessing — basic resize and normalization. No intensity windowing or advanced preprocessing
+**🔧 How to fix:** Extend `SegDataset` in `prepare.py`:
+```python
+# Add intensity windowing for medical images
+# Implement histogram equalization or CLAHE
+# Add z-score normalization per dataset
+# Implement dataset-specific preprocessing hooks
+```
+
+**Limitation:** Basic data splitting — simple random split. No cross-validation or stratification
+**🔧 How to fix:** Modify the dataset splitting logic:
+```python
+# Add k-fold cross-validation support
+# Implement stratified splitting by class distribution
+# Add domain-aware splitting for multi-center data
+# Implement ensemble training across different splits
+```
+
+**Limitation:** 2D only — no native 3D training support. NIfTI volumes are sliced to 2D
+**🔧 How to fix:** Modify data loading and model architecture:
+```python
+# Load full 3D volumes instead of slices
+# Implement 3D UNet with 3D convolutions
+# Add sliding window inference for large volumes
+# Use memory-efficient 3D training with gradient checkpointing
+```
 
 ### Research Limitations
-- **No hyperparameter search** — Experiments are driven by AI agent intuition, not systematic HPO
-- **No ensembling** — No model ensembling, test-time augmentation, or uncertainty estimation
-- **Limited reproducibility** — Results depend on agent's random exploration path
-- **No interpretability** — No attention maps, GradCAM, or prediction visualization tools
+**Limitation:** No hyperparameter search — experiments driven by AI agent intuition, not systematic HPO
+**🔧 How to fix:** Add systematic search strategies:
+```python
+# Implement grid search over key hyperparameters
+# Add Bayesian optimization for efficient search
+# Use Optuna or Hyperopt for automated HPO
+# Track hyperparameter importance analysis
+```
+
+**Limitation:** No ensembling — no model ensembling, test-time augmentation, or uncertainty estimation
+**🔧 How to fix:** Add ensembling in `STAGE 5`:
+```python
+# Save multiple checkpoints and ensemble predictions
+# Implement test-time augmentation (TTA)
+# Add Monte Carlo dropout for uncertainty estimation
+# Implement model averaging across different random seeds
+```
+
+**Limitation:** No interpretability — no attention maps, GradCAM, or prediction visualization
+**🔧 How to fix:** Add visualization tools:
+```python
+# Implement GradCAM for attention visualization
+# Add overlay of predictions on original images
+# Create attention maps for transformer-based models
+# Generate confidence maps and uncertainty visualizations
+```
 
 ### Production Readiness
-- **Not battle-tested** — This is a research framework. Use established frameworks like nn-UNet for production medical imaging
-- **No inference pipeline** — No model export, ONNX conversion, or deployment tools
-- **Basic error handling** — Minimal validation and error recovery
-- **Research-grade code** — Optimized for experimentation, not for production use or edge cases
+**Limitation:** No inference pipeline — no model export, ONNX conversion, or deployment tools
+**🔧 How to fix:** Add deployment capabilities:
+```python
+# Create separate inference script with model loading
+# Add ONNX export: torch.onnx.export(model, ...)
+# Implement batch inference for production use
+# Add REST API or command-line interface for inference
+```
+
+**Limitation:** Basic error handling — minimal validation and error recovery
+**🔧 How to fix:** Add robust error handling:
+```python
+# Add input validation and sanity checks
+# Implement graceful degradation on errors
+# Add comprehensive logging and debugging tools
+# Create test suite for validation
+```
+
+### The Flexibility Advantage
+
+🎯 **Key Point:** Unlike "black-box" frameworks, Auto-Segmentation puts you in control:
+- **Single file to modify** — All changes happen in `train.py`
+- **Clear stages** — Each component is labeled and easy to find
+- **Git-tracked experiments** — Every modification is recorded and reversible
+- **No black magic** — You can see and modify everything
+
+**You're never stuck.** If you hit a limitation:
+1. Find the relevant stage in `train.py`
+2. Modify the code to add what you need
+3. Let the AI agent iterate on your changes
+4. Compare results and keep what works
 
 ### When This Framework Shines
 ✅ Rapid prototyping of segmentation ideas
-✅ Educational exploration of segmentation techniques  
+✅ Educational exploration of segmentation techniques
 ✅ Architecture search and experimentation
 ✅ Learning how different components affect performance
+✅ Building custom segmentation solutions
 
 ### When to Use Established Frameworks
 ❌ Production medical image segmentation
-❌ Published research requiring baselines
+❌ Published research requiring standardized baselines
 ❌ Competitions requiring state-of-the-art results
 ❌ Tasks where reliability and reproducibility are critical
 
