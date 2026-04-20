@@ -1,5 +1,5 @@
 """
-autoresearch-seg: Generic data loading and evaluation for segmentation tasks.
+auto-seg: Generic data loading and evaluation for segmentation tasks.
 This file is READ-ONLY. The AI agent must NOT modify this file.
 
 Supports: PNG/JPG, NIfTI (.nii.gz), NPY image formats.

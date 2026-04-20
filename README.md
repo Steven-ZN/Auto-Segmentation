@@ -1,26 +1,56 @@
-# autoresearch-seg
+# auto-seg
 
 AI agents running autonomous segmentation research, automatically.
 
-Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch) — but generalized for **any image segmentation task**. Give an AI agent a segmentation training setup, let it experiment overnight: modify the code, train within a fixed time budget, check if the metric improved, keep or discard, and repeat.
+## ⚠️ Project Status
 
-You wake up in the morning to a log of experiments and (hopefully) a better model.
+**This is a basic research framework for general-purpose image segmentation tasks.** It is designed as a starting point for autonomous ML research, not a production-ready system.
 
-## How it works
+## 🎯 Inspiration & License
 
-The repo has only three files that matter:
+This project is inspired by and adapted from [karpathy/autoresearch](https://github.com/karpathy/autoresearch), originally created for autonomous LLM research. We have generalized the concept to **any image segmentation task** while maintaining the core autonomous experimentation philosophy.
+
+**Original License:** MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🆚 vs nn-UNet
+
+| Feature | auto-seg | nn-UNet |
+|---------|------------------|---------|
+| **Purpose** | Autonomous research framework for experimenting with segmentation architectures and techniques | Production-level, self-configuring segmentation system |
+| **Automation** | AI agents autonomously modify code, train, and iterate on improvements | Automated preprocessing and configuration, but manual model training |
+| **Flexibility** | Highly flexible - agents can modify architecture, loss functions, augmentation, optimizers | Specialized for U-Net variants with fixed training pipeline |
+| **Research Focus** | Exploration of novel architectures, loss functions, training strategies | Optimized for proven, state-of-the-art medical image segmentation |
+| **Dataset Support** | Any segmentation dataset (PNG, NIfTI, NPY) with simple config | Primarily medical imaging with specific preprocessing requirements |
+| **Time Budget** | Fixed training time (5min default) for rapid experimentation | Full training until convergence (hours to days) |
+| **Evaluation** | Rapid iteration with immediate feedback on experiments | Comprehensive evaluation with cross-validation |
+| **Use Case** | Research prototyping, architecture search, education | Production medical image segmentation, competitions |
+| **Setup Complexity** | Simple - point config at dataset | Complex - requires specific folder structure and preprocessing |
+| **Reproducibility** | Git-tracked experiments with full history | Highly reproducible with fixed configurations |
+
+**Key Advantages of auto-seg:**
+- ✅ **Rapid experimentation** - 5-minute iterations vs. hours-long training
+- ✅ **Autonomous research** - AI agents explore the design space automatically
+- ✅ **Simple setup** - No complex preprocessing or configuration
+- ✅ **Educational** - Learn segmentation by experimenting with different approaches
+- ✅ **Flexible** - Easy to try new architectures, loss functions, etc.
+- ✅ **Format-agnostic** - Works with various image formats out of the box
+
+**When to use nn-UNet instead:**
+- 🏥 Production medical image segmentation
+- 🏆 Competitions requiring state-of-the-art results
+- 📊 Papers requiring benchmarked, established methods
+- 🔬 Tasks where nn-UNet is the established baseline
+
+## 🚀 How it works
+
+The repo contains only four files that matter:
 
 | File | Purpose | Who modifies |
 |------|---------|-------------|
 | `prepare.py` | Data loading, evaluation metrics, dataset utilities | ❌ Read-only |
 | `train.py` | Model, loss, optimizer, augmentation, training loop | 🤖 AI agent |
 | `program.md` | Agent instructions and research strategy | 👨‍💻 Human |
-
-Plus one config file:
-
-| File | Purpose |
-|------|---------|
-| `config.yaml` | Dataset paths, evaluation metric, time budget, device |
+| `config.yaml` | Dataset paths, evaluation metric, time budget, device | 👨‍💻 Human |
 
 The agent modifies `train.py` — everything is fair game: architecture, loss function, augmentation, optimizer, hyperparameters. After each 5-minute training run, the primary metric (Dice, IoU, or HD95) determines whether the change is kept or discarded.
 
@@ -46,7 +76,7 @@ The agent modifies `train.py` — everything is fair game: architecture, loss fu
 └──────────────────────────────────────────────────────┘
 ```
 
-## Quick start
+## 📦 Quick start
 
 ### 1. Install dependencies
 
@@ -125,7 +155,7 @@ Read program.md and let's kick off a new experiment! Let's do the setup first.
 
 The agent will create a branch, establish a baseline, and start iterating autonomously.
 
-## Supported data formats
+## 📁 Supported data formats
 
 | Format | Extensions | Notes |
 |--------|-----------|-------|
@@ -135,7 +165,7 @@ The agent will create a branch, establish a baseline, and start iterating autono
 
 Image-mask pairs are matched by filename stem. nnU-Net-style suffixes (`_0000`) are automatically stripped.
 
-## Supported metrics
+## 📊 Supported metrics
 
 | Metric | Config key | Direction | Notes |
 |--------|-----------|-----------|-------|
@@ -143,7 +173,7 @@ Image-mask pairs are matched by filename stem. nnU-Net-style suffixes (`_0000`) 
 | IoU / Jaccard | `iou` | Higher is better | Per-class mean (excl. background) |
 | Hausdorff 95% | `hd95` | Higher is better* | *Returned as negative internally |
 
-## What the agent can modify in train.py
+## 🔧 What the agent can modify in train.py
 
 The training script is organized into clearly labeled stages:
 
@@ -155,7 +185,7 @@ The training script is organized into clearly labeled stages:
 | STAGE 4 | Optimizer & scheduler | AdamW → SGD+momentum, cosine → poly decay |
 | STAGE 5 | Training loop | Add AMP, EMA, gradient accumulation |
 
-## Design choices
+## 🎨 Design choices
 
 - **Single file to modify.** The agent only touches `train.py`. Keeps scope manageable and diffs reviewable.
 - **Fixed time budget.** Training always runs for exactly N minutes. Experiments are directly comparable regardless of architecture or hyperparameter changes.
@@ -163,7 +193,7 @@ The training script is organized into clearly labeled stages:
 - **Format-agnostic data loading.** Supports natural images (PNG/JPG), medical images (NIfTI), and raw arrays (NPY) out of the box.
 - **Self-contained.** No external model registries. The baseline UNet is written from scratch in train.py.
 
-## Example configs
+## 📝 Example configs
 
 <details>
 <summary>Medical image segmentation (binary)</summary>
@@ -219,11 +249,14 @@ device: "cuda:0"
 ```
 </details>
 
-## License
+## 📄 License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+Based on [karpathy/autoresearch](https://github.com/karpathy/autoresearch), which is also licensed under the MIT License.
+
+## 🙏 Acknowledgments
 
 - [karpathy/autoresearch](https://github.com/karpathy/autoresearch) — the original concept of AI-driven autonomous research
 - [nanochat](https://github.com/karpathy/nanochat) — the training framework that inspired the single-file approach
+- [nn-UNet](https://github.com/MIC-DKFZ/nnUNet) — the state-of-the-art medical image segmentation framework that inspired many of the techniques implemented here
