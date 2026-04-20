@@ -1,6 +1,6 @@
 <div align="center">
 
-# Auto-Segmentation
+# 🔬 Auto-Segmentation
 
 ### *让 AI Agent 在你睡觉的时候做分割研究。*
 
@@ -24,7 +24,7 @@
 </td></tr>
 </table>
 
-### Auto-Segmentation 正是实现这一目标。
+### 🔬 Auto-Segmentation 正是实现这一目标。
 
 <br>
 
