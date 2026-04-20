@@ -254,6 +254,54 @@ device: "cuda:0"
 ```
 </details>
 
+## ⚠️ Limitations
+
+This is a **research prototype**, not a production-ready system. Key limitations to be aware of:
+
+### Architecture & Training
+- **Basic UNet only** — The baseline is a standard UNet. No attention mechanisms, residual blocks, or modern architectural improvements
+- **Simple augmentation** — Only random flips. No elastic deformations, color jittering, CutMix, or advanced augmentation strategies
+- **Basic loss function** — Combined Dice + Cross-Entropy. No focal loss, Tversky loss, boundary-aware loss, or class weighting
+- **Limited metrics** — Only Dice, IoU, and HD95. No per-class breakdown, confusion matrices, or boundary-specific metrics
+
+### Training Infrastructure
+- **No model checkpointing** — Models are not saved. Each experiment starts from scratch
+- **Fixed time budget** — Training stops after N minutes regardless of convergence. May not reach optimal performance
+- **Single GPU only** — No multi-GPU or distributed training support
+- **Basic optimizer** — AdamW with cosine decay. No SGD with momentum, Adam, LAMB, or learning rate finder
+- **No early stopping** — Relies entirely on time budget rather than validation performance
+- **Minimal logging** — Only terminal output and TSV file. No TensorBoard, W&B, or detailed experiment tracking
+
+### Data Handling
+- **Simple preprocessing** — Basic resize and normalization. No intensity windowing, histogram equalization, or advanced preprocessing
+- **Basic data splitting** — Simple random split. No cross-validation, stratification, or domain-aware splitting
+- **Format support** — PNG/JPG, NIfTI, NPY only. No DICOM support (without conversion) or other medical formats
+- **2D only** — No native 3D training support. NIfTI volumes are sliced to 2D
+
+### Research Limitations
+- **No hyperparameter search** — Experiments are driven by AI agent intuition, not systematic HPO
+- **No ensembling** — No model ensembling, test-time augmentation, or uncertainty estimation
+- **Limited reproducibility** — Results depend on agent's random exploration path
+- **No interpretability** — No attention maps, GradCAM, or prediction visualization tools
+
+### Production Readiness
+- **Not battle-tested** — This is a research framework. Use established frameworks like nn-UNet for production medical imaging
+- **No inference pipeline** — No model export, ONNX conversion, or deployment tools
+- **Basic error handling** — Minimal validation and error recovery
+- **Research-grade code** — Optimized for experimentation, not for production use or edge cases
+
+### When This Framework Shines
+✅ Rapid prototyping of segmentation ideas
+✅ Educational exploration of segmentation techniques  
+✅ Architecture search and experimentation
+✅ Learning how different components affect performance
+
+### When to Use Established Frameworks
+❌ Production medical image segmentation
+❌ Published research requiring baselines
+❌ Competitions requiring state-of-the-art results
+❌ Tasks where reliability and reproducibility are critical
+
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
